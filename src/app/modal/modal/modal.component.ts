@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { MovieContractService } from 'src/app/services/movie-contract.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { Web3Service } from 'src/app/services/web3.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class ModalComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalComponent>,
     private movieContract: MovieContractService,
     private web3Ser: Web3Service,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,10 @@ export class ModalComponent implements OnInit {
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigate(['/movie']);
       this.dialogRef.close(true);
+      this.notificationService.openSuccessSnackBar('New movie has been successfully added');
+    }, error => {
+      this.notificationService.openErrorSnackBar('Error occurred while adding movie');
+      console.error(error);
     });
   }
 

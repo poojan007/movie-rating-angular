@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MovieContractService } from '../services/movie-contract.service';
 import { MovieService } from '../services/movie.service';
+import { NotificationService } from '../services/notification.service';
 import { Web3Service } from '../services/web3.service';
 
 export class Movie {
@@ -31,7 +32,8 @@ export class MovieComponent implements OnInit {
     private movieService: MovieService,
     private movieContract: MovieContractService,
     private router: Router,
-    private web3Ser: Web3Service
+    private web3Ser: Web3Service,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -78,6 +80,9 @@ export class MovieComponent implements OnInit {
           });
         });
       }
+    }, error => {
+      this.notificationService.openErrorSnackBar('Error loading movie list');
+      console.error(error);
     });
   }
 
@@ -86,6 +91,10 @@ export class MovieComponent implements OnInit {
     this.movieContract.rateMovie(id, value, this.account).subscribe(res => {
       this.reloadComponent();
       this.loading = false;
+      this.notificationService.openSuccessSnackBar('Your vote has been successfully recorded');
+    }, error => {
+      this.notificationService.openErrorSnackBar('Error occurred during vote');
+      console.error(error);
     });
   }
 
