@@ -13,9 +13,9 @@ export class Web3Service {
 
   public web3: any;
 
-  constructor() {
-    this.checkAndInstantiateWeb3();
-  }
+  // constructor() {
+  //   this.checkAndInstantiateWeb3();
+  // }
 
   checkAndInstantiateWeb3 = () => {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)

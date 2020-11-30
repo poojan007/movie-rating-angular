@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ModalComponent } from './modal/modal/modal.component';
 import { MovieService } from './services/movie.service';
+import { Web3Service } from './services/web3.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,12 @@ export class AppComponent implements OnInit {
   title = 'movie-rating-angular';
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private web3Ser: Web3Service
   ) { }
 
   ngOnInit(): void {
-
+    this.web3Ser.checkAndInstantiateWeb3();
   }
 
   addMovie() {
