@@ -38,6 +38,7 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reloadComponent();
     this.getMovieFromContract();
     this.web3Ser.getAccounts().subscribe(response => {
       this.accounts = response;
