@@ -1,0 +1,31 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <div class="loading-overlay" *ngIf="loading">
+    <mat-progress-bar mode="indeterminate" value="40" color="accent"></mat-progress-bar>
+  </div>
+  <div class="col-12">
+      <div *ngFor="let model of movies; let i = index">
+        <div class="col-4 float-left card">
+            <div class="col-3 float-left">
+              <img class="img-thumb" *ngIf="model.poster_path" mat-card-image src="https://image.tmdb.org/t/p/w300/{{model.poster_path}}" [alt]="model.title ? model.title : model.name">
+            </div>
+            <div class="col-9 float-left">
+              <div class="margin-bottom">
+                  <div class="text">
+                    <strong *ngIf="model.title">{{model.title}}</strong>
+                  </div>
+                  <div class="text">
+                    <p *ngIf="model.rating_average">
+                      <strong style="color: #F44336;">Rating Average: </strong>{{model.rating_average}}
+                    </p>
+                    <p *ngIf="model.total_rating">
+                      <strong style="color: #F44336;">Total Rating: </strong>{{model.total_rating}}
+                    </p>
+                  </div>
+              </div>
+              <bar-rating [(rate)]="model.rate" [max]="5" [theme]="'stars'" (rateChange)="updateRate(i, $event)"></bar-rating>
+            </div>
+        </div>
+      </div>
+  </div>
+
+</div>

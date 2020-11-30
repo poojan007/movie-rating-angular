@@ -1,0 +1,15 @@
+<h1 mat-dialog-title style="color: red">
+  Add New Movie
+</h1>
+
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Movie Name</mat-label>
+    <input matInput placeholder="Ex. Sky Fall" value="" [(ngModel)]="movieName">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Add</button>
+  <button mat-raised-button color="accent" (click)="onDismiss()">Close</button>
+</div>
