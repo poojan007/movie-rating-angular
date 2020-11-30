@@ -13,9 +13,9 @@ export class Web3Service {
 
   public web3: any;
 
-  // constructor() {
-  //   this.checkAndInstantiateWeb3();
-  // }
+  constructor() {
+    this.checkAndInstantiateWeb3();
+  }
 
   checkAndInstantiateWeb3 = () => {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
@@ -25,7 +25,16 @@ export class Web3Service {
         'Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask'
       );
       // Use Mist/MetaMask's provider
-      this.web3 = new Web3(window.web3.currentProvider);
+      // this.web3 = new Web3(window.web3.currentProvider);
+
+      if (window.ethereum) {
+        this.web3 = new Web3(window.ethereum);
+        try {
+          // Request account access if needed
+          window.ethereum.enable();
+        } catch (error) {
+        }
+      }
     } else {
       console.warn(
         // tslint:disable-next-line: max-line-length

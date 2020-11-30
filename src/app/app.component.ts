@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.web3Ser.checkAndInstantiateWeb3();
+
   }
 
   addMovie() {

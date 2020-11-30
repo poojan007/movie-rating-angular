@@ -38,7 +38,6 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getPopularMovies(1);
     this.getMovieFromContract();
     this.web3Ser.getAccounts().subscribe(response => {
       this.accounts = response;
@@ -49,21 +48,18 @@ export class MovieComponent implements OnInit {
   getPopularMovies(page: number) {
     this.movieService.getPopular(page).subscribe(res => {
       this.movies = res.results;
-      console.log(this.movies);
     });
   }
 
   getMovieFromContract() {
     this.loading = true;
     this.movieContract.getMovies().subscribe(response => {
-      console.log(response);
       const movies = response;
 
       for (const [i, movie] of movies.entries()) {
         this.movieContract.getMovieRatings(i).subscribe(res => {
           const totalRater = res.totalRater;
           const totalRating = res.totalRating;
-          console.log(movie + ':' + totalRating + ' / ' + totalRater);
           let ratingAverage = 0;
           if (parseInt(totalRater) !== 0) {
             ratingAverage = parseInt(totalRating) / parseInt(totalRater);
@@ -83,6 +79,7 @@ export class MovieComponent implements OnInit {
     }, error => {
       this.notificationService.openErrorSnackBar('Error loading movie list');
       console.error(error);
+      this.loading = false;
     });
   }
 
@@ -95,6 +92,7 @@ export class MovieComponent implements OnInit {
     }, error => {
       this.notificationService.openErrorSnackBar('Error occurred during vote');
       console.error(error);
+      this.loading = false;
     });
   }
 

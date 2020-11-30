@@ -40,7 +40,7 @@ export class MovieContractService {
 
   addMovie(movieName, account): any {
     return new Observable(observer => {
-      this.MovieRating.methods.add(movieName).send({from: account}).then(value => {
+      this.MovieRating.methods.add(movieName).send(account, {from: account}).then(value => {
         observer.next(value);
         observer.complete();
       }).catch(e => {
@@ -66,7 +66,7 @@ export class MovieContractService {
 
   rateMovie(movieId, rating, account): any {
     return new Observable(observer => {
-      this.MovieRating.methods.rate(movieId, rating).send({from: account}).then(value => {
+      this.MovieRating.methods.rate(movieId, rating).send(account, {from: account}).then(value => {
         observer.next(value);
         observer.complete();
       }).catch(e => {

@@ -15,6 +15,7 @@ export class ModalComponent implements OnInit {
   movieName: string;
   account: any;
   accounts: any;
+  loading = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
@@ -32,15 +33,18 @@ export class ModalComponent implements OnInit {
   }
 
   onConfirm(): void {
+    this.loading = true;
     this.movieContract.addMovie(this.movieName, this.account).subscribe(res => {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigate(['/movie']);
       this.dialogRef.close(true);
       this.notificationService.openSuccessSnackBar('New movie has been successfully added');
+      this.loading = false;
     }, error => {
       this.notificationService.openErrorSnackBar('Error occurred while adding movie');
       console.error(error);
+      this.dialogRef.close(true);
     });
   }
 
